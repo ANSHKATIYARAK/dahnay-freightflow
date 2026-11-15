@@ -25,6 +25,34 @@ htmlcov/
 scratch/
 .system_generated/
 
+# Non-DahNAY Internal Engines & Portfolio Tools
+.claude/
+build/
+freight_flow/
+saas_platform/
+studio_engine/
+tools/
+venture_os/
+inspect_live.py
+pilot_contract.md
+run_langgraph_pipeline.py
+run_pipeline.py
+run_saas_app.py
+run_server.py
+run_studio.py
+e_commerce___retailtech.db
+
+# Exclude other domain tests
+tests/test_all_domains_and_agents.py
+tests/test_api_dispatch.py
+tests/test_bot_fetch.py
+tests/test_crawl4ai_extraction.py
+tests/test_enterprise_suite.py
+tests/test_freight_flow.py
+tests/test_ingest_endpoint.py
+tests/test_linkedin_crawl.py
+tests/test_playwright_chrome.py
+
 # Databases
 *.db
 !dahnay_logistics/data/freightflow.db

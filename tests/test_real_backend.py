@@ -18,7 +18,7 @@ if sys.platform == "win32":
         pass
 
 from fastapi.testclient import TestClient
-from studio_engine.server import app
+from app import app
 from dahnay_logistics.db.database import init_db, seed_default_bookings, get_db_connection
 from dahnay_logistics.backend.service import FreightFlowService
 
