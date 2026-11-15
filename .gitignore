@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing & Caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Scratch
+*.log
+scratch/
+.system_generated/
+
+# Databases
+*.db
+!dahnay_logistics/data/freightflow.db

@@ -1,0 +1,25 @@
+# DahNAY Logistics Shipping Instruction Extraction Template
+# Compliant with invoice2data & DCSA eBL specifications
+issuer: DahNAY Logistics Chennai
+keywords:
+  - SHIPPING INSTRUCTIONS
+  - Booking Ref
+  - Tirupur Garments Export Ltd
+
+fields:
+  booking_reference: Booking Ref(?:erence)?[\s:]+([A-Z0-9\-]+)
+  shipper_name: Shipper[\s:]+([^\n\r]+)
+  consignee_name: Consignee[\s:]+([^\n\r]+)
+  vessel_name: Vessel[\s:]+([A-Z\s]+?)(?:\s+Voyage|\s+Voy|\n)
+  voyage_number: Voyage[\s:]+([0-9A-Z]+)
+  port_of_loading: Port of Loading[\s:]+([^\n\r]+)
+  port_of_discharge: Port of Discharge[\s:]+([^\n\r]+)
+  total_gross_weight_kg: Gross Weight[\s:]+([0-9,.]+)\s*(?:KGS|KG)?
+  total_packages: Packages[\s:]+([0-9]+)\s*(?:Cartons|Pkgs|Packages)?
+  cargo_description: Cargo Description[\s:]+([^\n\r]+)
+  hs_code: HS Code[\s:]+([0-9.]+)
+
+tables:
+  - start: "Containers:"
+    end: "Total|PREPAID|COLLECT"
+    body: (?P<container_number>[A-Z]{4}\d{7})\s*(?:/|\s+)\s*(?P<seal_number>[A-Z0-9]+)

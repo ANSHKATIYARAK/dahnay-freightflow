@@ -1,0 +1,51 @@
+{
+  "booking_reference": "BKG-MAA-992104",
+  "customer_account": "Tirupur Garments Export Ltd",
+  "shipper": {
+    "name": "Tirupur Garments Export Ltd",
+    "address": "Plot 14, SIDCO Industrial Estate, Tirupur - 641603, Tamil Nadu, India",
+    "iec_code": "0401019283",
+    "gstin": "33AABCT9981E1Z4"
+  },
+  "consignee": {
+    "name": "Gulf Retail Fashion LLC",
+    "address": "P.O. Box 9821, Near Gate 4, Jebel Ali Free Zone, Dubai, UAE",
+    "tax_id": "TRN-100293819200003"
+  },
+  "notify_party": "SAME AS CONSIGNEE",
+  "routing": {
+    "vessel_name": "MSC EMANUELA",
+    "voyage_number": "2408W",
+    "port_of_loading": "Chennai Port (INMAA)",
+    "port_of_discharge": "Jebel Ali Port (AEJEA)",
+    "place_of_delivery": "Dubai, UAE"
+  },
+  "cargo": {
+    "description": "100% Cotton Knitted Finished T-Shirts and Polo Shirts",
+    "hs_code": "6109.10",
+    "total_packages": 920,
+    "package_type": "Cartons",
+    "total_gross_weight_kg": 26800.0,
+    "total_net_weight_kg": 24900.0,
+    "total_cbm": 64.2
+  },
+  "containers": [
+    {
+      "container_number": "MSCU9081245",
+      "seal_number": "SL982103",
+      "size_type": "40HC",
+      "gross_weight_kg": 13400.0,
+      "cbm": 32.1,
+      "packages": 460
+    },
+    {
+      "container_number": "MEDU4091823",
+      "seal_number": "SL982104",
+      "size_type": "40HC",
+      "gross_weight_kg": 13400.0,
+      "cbm": 32.1,
+      "packages": 460
+    }
+  ],
+  "freight_terms": "PREPAID"
+}

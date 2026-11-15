@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  agent-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent_as_a_service_api
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://saas_user:saas_pass@postgres:5432/saas_db
+      - REDIS_URL=redis://redis:6379/0
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-sk_test_placeholder}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-whsec_placeholder}
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: saas_postgres_db
+    environment:
+      POSTGRES_USER: saas_user
+      POSTGRES_PASSWORD: saas_pass
+      POSTGRES_DB: saas_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: saas_redis_queue
+    ports:
+      - "6379:6379"
+    restart: always
+
+volumes:
+  postgres_data:

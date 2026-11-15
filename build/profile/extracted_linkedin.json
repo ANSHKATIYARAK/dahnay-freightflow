@@ -1,0 +1,195 @@
+{
+  "name": "Muhammad Hudaifah Mubarak",
+  "headline": "B.Tech IT Student at VIT Vellore | Smart Contract Auditor & gRPC Developer",
+  "location": "Vellore, Tamil Nadu, India",
+  "bio_short": "B.Tech IT student at VIT Vellore with a lifelong fascination for technology, gaming, zero-knowledge privacy, and distributed systems engineering.",
+  "about": "I am a B.Tech Information Technology student at Vellore Institute of Technology (VIT Vellore) with a lifelong fascination for technology, gaming, and systems engineering.\n\nMy technical journey bridges low-level distributed protocols, zero-knowledge cryptography, and full-stack software. At DECODE SIH 2026, I served as Smart Contract Auditor & gRPC Developer on Sentinel-ZK\u2014auditing permissioned ZK-ledgers for access control and proof validity, and building high-throughput gRPC communication between bank edge nodes and zk-SNARK verification.\n\nBeyond systems programming, I am an active contributor to the VIT Music Club, passionate about creative audio engineering, competitive gaming, and multi-agent autonomous software architectures.",
+  "url": "https://www.linkedin.com/in/muhammad-hudaifah-mubarak-a98239279",
+  "github": "https://github.com/HXDXHUD",
+  "email": "hudaifah.mubarak@gmail.com",
+  "metrics": {
+    "institution": "VIT Vellore",
+    "degree": "B.Tech IT",
+    "connections": "1,540+",
+    "languages": "5 Languages"
+  },
+  "languages": [
+    {
+      "name": "English",
+      "proficiency": "Native / Bilingual Proficiency"
+    },
+    {
+      "name": "Tamil",
+      "proficiency": "Full Professional Proficiency"
+    },
+    {
+      "name": "Arabic",
+      "proficiency": "Professional Working Proficiency"
+    },
+    {
+      "name": "Hindi",
+      "proficiency": "Professional Working Proficiency"
+    },
+    {
+      "name": "German",
+      "proficiency": "Elementary Proficiency"
+    }
+  ],
+  "skills_categorized": {
+    "Zero-Knowledge & FinTech Security": [
+      "Smart Contract Auditing",
+      "zk-SNARKs & ZK-Ledgers",
+      "gRPC Edge Node Streaming",
+      "UPI Fraud Prevention Architecture",
+      "Permissioned Ledger Security",
+      "Access Control & Tamper Resistance"
+    ],
+    "Systems & Backend Engineering": [
+      "Python 3.11+",
+      "FastAPI & Asynchronous I/O",
+      "Advanced SQL & Database Design",
+      "Scala for Data Science",
+      "Distributed Ledgers",
+      "RESTful APIs & Microservices"
+    ],
+    "Autonomous Agents & AI": [
+      "LangGraph Multi-Agent Workflows",
+      "Autonomous Venture Engine (VentureOS)",
+      "Crawl4AI Headless Extraction",
+      "mem0 Persistent Memory",
+      "RAG Vector Pipelines"
+    ],
+    "Creative & Club Technology": [
+      "Audio Engineering & Production",
+      "VIT Music Club Technical Ops",
+      "Event Sound & Acoustic Staging",
+      "Competitive Gaming Systems"
+    ]
+  },
+  "featured_projects": [
+    {
+      "id": "freightflow-ai",
+      "category": "EXIM Logistics SaaS \u2022 DahNAY Solution",
+      "title": "FreightFlow AI: Document-to-Invoice Pre-Fill Engine",
+      "tagline": "Automated multi-format SI extraction, discrepancy cross-checking, and commercial invoice generation.",
+      "description": "Engineered an automated document-to-invoice pre-fill engine addressing documented operational bottlenecks at DahNAY Logistics and Chennai/Tuticorin freight forwarders. Reads raw multi-format shipping instructions, extracts container & weight entities, cross-checks against ERP job records to prevent costly Bill of Lading amendment fees ($50-$150/BL), and auto-generates pre-filled commercial invoices with automated currency conversion.",
+      "metrics": "Live Interactive Demo: /freightflow \u2022 Reconciles VGM \u2022 \u20b91.56 Cr Loss Prevented",
+      "tech": [
+        "Python",
+        "FastAPI",
+        "Pydantic",
+        "OCR Normalization",
+        "ERP Integration"
+      ],
+      "icon": "ship",
+      "featured": true
+    },
+    {
+      "id": "sentinel-zk",
+      "category": "DECODE SIH 2026 \u2022 FinTech Privacy",
+      "title": "Sentinel-ZK: Real-Time UPI Fraud Interception",
+      "tagline": "Privacy-preserving fraud interception without exposing customer PII via Zero-Knowledge proofs.",
+      "description": "Built during DECODE SIH 2026 (Smart India Hackathon). Acted as Smart Contract Auditor & gRPC Developer. Audited permissioned ZK-ledgers for access control, proof validity, and tamper resistance. Developed low-latency gRPC communication protocols between bank edge nodes and zk-SNARK verification engines, enabling inter-bank fraud intelligence sharing with zero PII exposure.",
+      "metrics": "DECODE SIH 2026 \u2022 zk-SNARKs \u2022 gRPC Edge Communication \u2022 Zero PII Leakage",
+      "tech": [
+        "Zero-Knowledge Proofs",
+        "gRPC",
+        "Smart Contract Audit",
+        "Python",
+        "Distributed Ledgers"
+      ],
+      "icon": "shield-check",
+      "featured": true
+    },
+    {
+      "id": "vit-music-club-tech",
+      "category": "Campus Leadership & Audio Tech",
+      "title": "VIT Music Club Audio & Staging Engineering",
+      "tagline": "Technical audio engineering, signal routing, and digital staging for university performances.",
+      "description": "Managed sound staging, signal path optimization, and multi-track recording systems for live university shows and musical productions at Vellore Institute of Technology. Coordinated with 10+ musicians and technical crew for seamless live acoustic performance.",
+      "metrics": "Live Sound Staging \u2022 Digital Audio Routing \u2022 Multitrack Studio Production",
+      "tech": [
+        "Audio Engineering",
+        "Signal Processing",
+        "Live Staging",
+        "Technical Coordination"
+      ],
+      "icon": "music",
+      "featured": true
+    },
+    {
+      "id": "venture-os",
+      "category": "Autonomous AI Systems",
+      "title": "VentureOS Multi-Agent Factory",
+      "tagline": "Autonomous enterprise software engine governing 7 departments and 34 specialized roles.",
+      "description": "Engineered a production-grade multi-agent autonomous venture factory operating across 7 departments and 34 specialized roles using LangGraph, mem0, and Crawl4AI. Features typed Pydantic contracts and real-time SSE streaming.",
+      "metrics": "34 Agents \u2022 7 Departments \u2022 81/81 Test Suite Passed",
+      "tech": [
+        "Python",
+        "LangGraph",
+        "FastAPI",
+        "mem0",
+        "Crawl4AI",
+        "Tailwind CSS"
+      ],
+      "icon": "cpu",
+      "featured": true
+    },
+    {
+      "id": "sql-data-intelligence",
+      "category": "Data Architecture & Analytics",
+      "title": "Advanced SQL & Time-Series Data Engine",
+      "tagline": "High-throughput query optimization and temporal data pipeline design.",
+      "description": "Comprehensive data processing and query optimization engine built with advanced SQL and Scala for real-time data analysis, time-series anomaly detection, and low-latency database querying.",
+      "metrics": "Sub-10ms Queries \u2022 Time-Series Analysis \u2022 Advanced Indexing",
+      "tech": [
+        "Advanced SQL",
+        "Scala",
+        "PostgreSQL",
+        "Time-Series Data"
+      ],
+      "icon": "database",
+      "featured": false
+    }
+  ],
+  "experience": [
+    {
+      "role": "Smart Contract Auditor & gRPC Developer (Sentinel-ZK)",
+      "company": "DECODE SIH 2026 (Smart India Hackathon)",
+      "period": "Recent Project / Hackathon",
+      "location": "Vellore, Tamil Nadu, India",
+      "highlights": [
+        "Audited permissioned ZK-ledger for access control, proof validity, and tamper resistance.",
+        "Engineered high-performance gRPC communication pipelines between bank edge nodes and zk-SNARK verification engines.",
+        "Enabled real-time inter-bank fraud intelligence sharing without exposing customer PII."
+      ]
+    },
+    {
+      "role": "Technical Member & Audio Engineer",
+      "company": "VIT Music Club",
+      "period": "Active Member",
+      "location": "Vellore, Tamil Nadu, India",
+      "highlights": [
+        "Managed audio routing, live sound reinforcement, and acoustic staging for club performances.",
+        "Coordinated technical logistics and live performance setups across university auditorium venues.",
+        "Collaborated with diverse team of artists and audio technicians."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology (B.Tech) \u2014 Information Technology",
+      "institution": "Vellore Institute of Technology (VIT)",
+      "period": "2025 \u2014 2029",
+      "grade": "Active Undergraduate Student",
+      "location": "Vellore, Tamil Nadu, India"
+    },
+    {
+      "degree": "Higher Secondary / Senior School",
+      "institution": "Schooling Foundation",
+      "period": "2023 \u2014 2025",
+      "grade": "Academic Excellence in Mathematics & Science",
+      "location": "India"
+    }
+  ]
+}

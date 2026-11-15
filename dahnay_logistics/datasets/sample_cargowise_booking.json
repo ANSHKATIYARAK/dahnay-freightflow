@@ -1,0 +1,21 @@
+{
+  "job_id": "JOB-2026-CHN-048",
+  "booking_reference": "BKG-MAA-992104",
+  "client_name": "Tirupur Garments Export Ltd",
+  "carrier_line": "Mediterranean Shipping Company (MSC)",
+  "contract_type": "FCL/FCL",
+  "pol": "Chennai Port (INMAA)",
+  "pod": "Jebel Ali Port (AEJEA)",
+  "vessel_scheduled": "MSC EMANUELA",
+  "voyage_scheduled": "2408W",
+  "approved_weight_limit_kg": 24000.0,
+  "approved_containers_count": 2,
+  "container_size_type": "40HC",
+  "commercial_rates": {
+    "ocean_freight_rate_usd_per_teu": 1650.0,
+    "terminal_handling_charges_inr_per_cntr": 11500.0,
+    "documentation_fee_inr": 4500.0,
+    "baf_fuel_surcharge_usd_per_cntr": 120.0,
+    "gst_percentage": 18.0
+  }
+}

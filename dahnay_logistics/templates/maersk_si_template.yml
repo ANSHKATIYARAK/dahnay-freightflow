@@ -1,0 +1,19 @@
+# Maersk Line Export Shipping Instruction Template
+# Compliant with invoice2data & DCSA eBL standards
+issuer: Maersk Line A/S
+keywords:
+  - MAERSK
+  - SHIPPING INSTRUCTION
+  - AP MOLLER
+
+fields:
+  booking_reference: (?:Booking Number|Shipment ID)[\s:]+([A-Z0-9\-]+)
+  shipper_name: Shipper / Exporter[\s:]+([^\n\r]+)
+  consignee_name: Consignee[\s:]+([^\n\r]+)
+  vessel_name: (?:Vessel Name|Feeder Vessel)[\s:]+([A-Z\s]+?)(?:\s+Voyage|\n)
+  voyage_number: Voyage[\s:]+([0-9A-Z]+)
+  port_of_loading: Port of Load[\s:]+([^\n\r]+)
+  port_of_discharge: Port of Discharge[\s:]+([^\n\r]+)
+  total_gross_weight_kg: Total Weight[\s:]+([0-9,.]+)\s*(?:KGS|KG)?
+  total_packages: Total Cartons[\s:]+([0-9]+)
+  cargo_description: Commodity[\s:]+([^\n\r]+)
