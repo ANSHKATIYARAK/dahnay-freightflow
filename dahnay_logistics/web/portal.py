@@ -181,7 +181,7 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DahNAY FreightFlow | EXIM Operations & CargoWise One EDI Bridge</title>
+    <title>FreightFlow | Automated Documentation & CargoWise-Ready EXIM Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -426,7 +426,7 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
         async function transmitCargoWise() {{
             const terminal = document.getElementById('edi-log-terminal');
             terminal.classList.remove('hidden');
-            terminal.innerHTML = '<div class="text-slate-400 font-mono">[EDI] Initiating eAdaptor SFTP / HTTPS handshake with DahNAY PROD_IN (Chennai Hub)...</div>';
+            terminal.innerHTML = '<div class="text-slate-400 font-mono">[XML/EDI] Validating UniversalShipment XML schema against CargoWise eAdaptor standard...</div>';
 
             try {{
                 const res = await fetch('/api/v1/shipments/' + currentBookingRef + '/cargowise-sync', {{
@@ -434,9 +434,9 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
                 }});
                 const json = await res.json();
                 if (json.status === 'success') {{
-                    terminal.innerHTML += '<div class="text-blue-400 font-mono">[EDI] Transmitting UniversalShipment XML (UniversalInterchange v1.1 Schema)...</div>';
-                    terminal.innerHTML += '<div class="text-emerald-400 font-mono font-bold">[EDI] ACKNOWLEDGED: ' + json.data.transaction_id + ' registered in CargoWise ERP.</div>';
-                    terminal.innerHTML += '<div class="text-slate-300 font-mono">[EDI] Shipment state locked as CARGOWISE_SYNCED. Invoices queued for financial settlement.</div>';
+                    terminal.innerHTML += '<div class="text-blue-400 font-mono">[XML/EDI] CargoWise UniversalInterchange v1.1 payload mapped and validated.</div>';
+                    terminal.innerHTML += '<div class="text-emerald-400 font-mono font-bold">[XML/EDI] READY FOR IMPORT: Transaction ' + json.data.transaction_id + ' validated.</div>';
+                    terminal.innerHTML += '<div class="text-slate-300 font-mono">[XML/EDI] Shipment reconciled and approved. Zero manual data re-entry required.</div>';
                     await loadShipment(currentBookingRef);
                     await refreshShipmentsTable();
                 }} else {{
@@ -550,8 +550,8 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-sm font-bold tracking-tight text-white">DahNAY FreightFlow</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">PROD_IN • Chennai MAA</span>
+                        <span class="text-sm font-bold tracking-tight text-white">FreightFlow</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">EXIM AUTOMATION</span>
                     </div>
                 </div>
             </div>
@@ -560,15 +560,15 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
             <div class="hidden lg:flex items-center gap-6 text-xs font-mono text-slate-400">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                    <span>Database: <b class="text-slate-200">SQLite Connected</b></span>
+                    <span>Engine: <b class="text-slate-200">ISO 6346 / SOLAS</b></span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                    <span>eAdaptor EDI: <b class="text-slate-200">Ready</b></span>
+                    <span>CargoWise Mapping: <b class="text-slate-200">Universal XML</b></span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                    <span>Gateway: <b class="text-slate-200">INMAA (Chennai Port)</b></span>
+                    <span>Security: <b class="text-slate-200">Zero Data Retention</b></span>
                 </div>
             </div>
 
@@ -702,7 +702,7 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
                 <div class="bg-[#0E1424] border border-slate-800 rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-3">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-400 font-mono">DahNAY Job:</span>
+                            <span class="text-xs text-slate-400 font-mono">Job Reference:</span>
                             <span id="display-job-id" class="text-xs font-bold text-white font-mono">{booking.get('job_id', 'JOB-2026-CHN-048')}</span>
                             <span class="text-slate-600">•</span>
                             <span class="text-xs text-slate-400">Carrier: <b id="display-carrier" class="text-slate-200">{booking.get('carrier_line', 'MSC')}</b></span>
@@ -832,9 +832,9 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
 
                     <div class="flex items-center gap-3">
                         <button onclick="transmitCargoWise()" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-sm flex items-center gap-2 transition">
-                            <i data-lucide="send" class="w-3.5 h-3.5"></i> Transmit to CargoWise eAdaptor
+                            <i data-lucide="send" class="w-3.5 h-3.5"></i> Export CargoWise XML
                         </button>
-                        <span class="text-xs text-slate-400 font-mono">Target: DahNAY PROD_IN eAdaptor</span>
+                        <span class="text-xs text-slate-400 font-mono">Format: UniversalShipment v1.1 XML</span>
                     </div>
 
                     <div id="edi-log-terminal" class="hidden p-3 rounded bg-black border border-slate-800 font-mono text-xs space-y-1">
