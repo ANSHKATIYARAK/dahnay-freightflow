@@ -24,6 +24,8 @@ htmlcov/
 *.log
 scratch/
 .system_generated/
+.agents/
+skills-lock.json
 
 # Non-DahNAY Internal Engines & Portfolio Tools
 .claude/
