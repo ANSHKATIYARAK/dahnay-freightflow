@@ -41,12 +41,44 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def vercel_path_normalization(request: Request, call_next):
+    """
+    Normalizes Vercel serverless request paths.
+    When Vercel rewrites requests to /api/index.py, ASGI receives the destination path.
+    This middleware reconstructs the real target path from Vercel forward headers.
+    """
+    raw_path = request.scope.get("path", "")
+    fwd_uri = (
+        request.headers.get("x-forwarded-uri")
+        or request.headers.get("x-invoke-path")
+        or request.headers.get("x-matched-path")
+    )
+
+    if raw_path in ["/api/index.py", "/api/index", "/api/index/", "/api", "/api/"]:
+        if fwd_uri:
+            target_path = fwd_uri.split("?")[0]
+            request.scope["path"] = target_path if target_path else "/"
+        else:
+            request.scope["path"] = "/"
+    elif raw_path.startswith("/api/index.py/"):
+        request.scope["path"] = raw_path[len("/api/index.py"):]
+    elif raw_path.startswith("/api/index/"):
+        request.scope["path"] = raw_path[len("/api/index"):]
+
+    return await call_next(request)
+
+
 # Mount DahNAY FreightFlow API routes
 app.include_router(dahnay_api_router)
 
 
 @app.get("/", response_class=HTMLResponse)
 @app.get("/dahnay", response_class=HTMLResponse)
+@app.get("/api", response_class=HTMLResponse)
+@app.get("/api/index", response_class=HTMLResponse)
+@app.get("/api/index.py", response_class=HTMLResponse)
 def dahnay_operations_portal(request: Request, source: str = "excel"):
     """Serves the primary DahNAY FreightFlow high-density operations platform."""
     return render_dahnay_portal_html(selected_source=source)

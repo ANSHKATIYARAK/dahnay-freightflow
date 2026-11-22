@@ -15,3 +15,6 @@ if dahnay_dir not in sys.path:
     sys.path.insert(0, dahnay_dir)
 
 from app import app
+
+# Expose both app and handler for Vercel serverless adapters
+handler = app
