@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<UniversalShipment xmlns="http://www.cargowise.com/Schemas/Universal/2011/11">
+  <Shipment>
+    <DataContext>
+      <Company>DAHNAY_LOGISTICS_CHENNAI</Company>
+      <EnterpriseID>DAHNAY</EnterpriseID>
+      <ServerID>PROD_IN</ServerID>
+    </DataContext>
+    <Order>
+      <OrderNumber>BKG-MAA-992104</OrderNumber>
+      <ClientReference>SI-992104</ClientReference>
+      <JobReference>JOB-2026-CHN-048</JobReference>
+      <TransportLeg>
+        <TransportMode>SEA</TransportMode>
+        <VesselName>MSC EMANUELA</VesselName>
+        <VoyageNumber>MSC</VoyageNumber>
+        <PortOfLoading>Chennai Port (INMAA)</PortOfLoading>
+        <PortOfDischarge>Jebel Ali Port (AEJEA)</PortOfDischarge>
+      </TransportLeg>
+      <Parties>
+        <Party Type="Shipper">
+          <Name>Tirupur Garments Export Ltd, SIDCO Industrial Estate, Tirupur, Tamil Nadu</Name>
+          <Address>SIDCO Industrial Estate, Tirupur, Tamil Nadu</Address>
+        </Party>
+        <Party Type="Consignee">
+          <Name>Gulf Retail Fashion LLC, Jebel Ali Free Zone, Dubai, UAE</Name>
+          <Address>Jebel Ali Free Zone, Dubai, UAE</Address>
+        </Party>
+      </Parties>
+      <Containers>
+        <Container>
+          <ContainerNumber>MSCU9081245</ContainerNumber>
+          <SealNumber>SL982103</SealNumber>
+          <Type>40HC</Type>
+          <GrossWeightKG>13400.0</GrossWeightKG>
+          <VolumeCBM>32.1</VolumeCBM>
+          <Packages>460</Packages>
+        </Container>
+        <Container>
+          <ContainerNumber>MEDU4091823</ContainerNumber>
+          <SealNumber>SL982104</SealNumber>
+          <Type>40HC</Type>
+          <GrossWeightKG>13400.0</GrossWeightKG>
+          <VolumeCBM>32.1</VolumeCBM>
+          <Packages>460</Packages>
+        </Container>
+      </Containers>
+      <CommercialInvoice>
+        <InvoiceNumber>DAH-INV-202611-71172</InvoiceNumber>
+        <BillTo>Tirupur Garments Export Ltd, SIDCO Industrial Estate, Tirupur, Tamil Nadu</BillTo>
+        <TotalUSD>3540.0</TotalUSD>
+        <TotalINR>338660.0</TotalINR>
+        <GSTAmountINR>4950.0</GSTAmountINR>
+      </CommercialInvoice>
+    </Order>
+  </Shipment>
+</UniversalShipment>

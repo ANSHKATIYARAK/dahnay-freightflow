@@ -517,6 +517,32 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
             }}
         }}
 
+        async function runGuidedDemo() {{
+            const banner = document.getElementById('demo-guide-toast');
+            if (banner) {{
+                banner.classList.remove('hidden');
+                banner.innerHTML = '<span class="font-bold text-blue-400">[1/3] SI Ingested</span>: 2 Checksum Errors & 2,800 KG SOLAS VGM Overweight detected.';
+            }}
+
+            await loadShipment('BKG-MAA-992104');
+            window.scrollTo({{ top: 380, behavior: 'smooth' }});
+
+            await new Promise(r => setTimeout(r, 2200));
+
+            if (banner) banner.innerHTML = '<span class="font-bold text-amber-400">[2/3] Auto-Fixing</span>: Applying 1-click checksum correction & slot waiver...';
+            await autoFixDiscrepancy(1);
+            await new Promise(r => setTimeout(r, 1400));
+
+            window.scrollTo({{ top: document.body.scrollHeight, behavior: 'smooth' }});
+            if (banner) banner.innerHTML = '<span class="font-bold text-emerald-400">[3/3] Exporting CargoWise XML</span>: Validating UniversalShipment v1.1 payload...';
+            await new Promise(r => setTimeout(r, 1200));
+            await transmitCargoWise();
+
+            if (banner) {{
+                banner.innerHTML = '<span class="font-bold text-emerald-300">✔ 60s Demo Flow Complete</span>: Replaced 22 mins manual re-entry. Zero B/L penalties.';
+            }}
+        }}
+
         function downloadXml() {{
             window.open('/api/v1/shipments/' + currentBookingRef + '/cargowise-xml', '_blank');
         }}
@@ -572,8 +598,11 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
                 </div>
             </div>
 
-            <!-- Upload Action -->
-            <div class="flex items-center gap-3">
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2.5">
+                <button onclick="runGuidedDemo()" class="px-3.5 py-1.5 rounded bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 font-semibold text-xs flex items-center gap-1.5 shadow-sm transition">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-emerald-400"></i> Run 60s Demo
+                </button>
                 <input type="file" id="upload-input" onchange="uploadFile(event)" class="hidden" accept=".xlsx,.xls,.pdf,.json,.txt" />
                 <button onclick="document.getElementById('upload-input').click()" class="px-3.5 py-1.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center gap-2 shadow-sm transition">
                     <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i> Ingest Shipping Instruction
@@ -847,6 +876,7 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
 
     </main>
 
+    <div id="demo-guide-toast" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-lg bg-[#0E1424] border border-blue-500/50 text-xs font-mono shadow-2xl backdrop-blur-md text-slate-200"></div>
     <script>lucide.createIcons();</script>
 </body>
 </html>"""
