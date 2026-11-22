@@ -218,8 +218,13 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
                     renderShipmentView(json.data);
                 }}
             }} catch (err) {{
-                alert('Error loading shipment: ' + err.message);
+                console.warn('Error loading shipment:', err);
             }}
+        }}
+
+        function setText(id, text) {{
+            const el = document.getElementById(id);
+            if (el) el.innerText = (text !== undefined && text !== null) ? text : '';
         }}
 
         function renderShipmentView(data) {{
@@ -229,41 +234,43 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
             const flags = data.discrepancies || [];
             const cntrs = data.containers || [];
 
-            document.getElementById('display-booking-ref').innerText = bkg.booking_reference;
-            document.getElementById('display-job-id').innerText = bkg.job_id;
-            document.getElementById('display-customer').innerText = bkg.customer_account;
-            document.getElementById('display-carrier').innerText = bkg.carrier_line;
-            document.getElementById('display-routing').innerText = bkg.pol_code + ' → ' + bkg.pod_code;
-            document.getElementById('display-vessel').innerText = bkg.vessel_scheduled + ' (' + bkg.voyage_scheduled + ')';
-            document.getElementById('display-slot-weight').innerText = Number(bkg.approved_weight_limit_kg).toLocaleString() + ' KGS';
+            setText('display-booking-ref', bkg.booking_reference);
+            setText('display-job-id', bkg.job_id);
+            setText('display-customer', bkg.customer_account);
+            setText('display-carrier', bkg.carrier_line);
+            setText('display-routing', bkg.pol_code + ' → ' + bkg.pod_code);
+            setText('display-vessel', bkg.vessel_scheduled + ' (' + bkg.voyage_scheduled + ')');
+            setText('display-slot-weight', Number(bkg.approved_weight_limit_kg).toLocaleString() + ' KGS');
 
             if (doc) {{
-                document.getElementById('display-si-weight').innerText = Number(doc.total_gross_weight_kg).toLocaleString() + ' KGS';
-                document.getElementById('doc-shipper-name').innerText = doc.shipper_name;
-                document.getElementById('doc-shipper-addr').innerText = doc.shipper_address || '';
-                document.getElementById('doc-shipper-iec').innerText = doc.shipper_iec || 'N/A';
-                document.getElementById('doc-shipper-gstin').innerText = doc.shipper_gstin || 'N/A';
-                document.getElementById('doc-consignee-name').innerText = doc.consignee_name;
-                document.getElementById('doc-consignee-addr').innerText = doc.consignee_address || '';
-                document.getElementById('doc-consignee-tax').innerText = doc.consignee_tax_id || 'N/A';
-                document.getElementById('doc-cargo-desc').innerText = doc.cargo_description || '';
-                document.getElementById('doc-packages').innerText = (doc.total_packages || 0) + ' ' + (doc.package_type || 'Cartons');
-                document.getElementById('doc-vessel').innerText = doc.vessel_name + ' / ' + doc.voyage_number;
-                document.getElementById('doc-pol').innerText = doc.port_of_loading;
-                document.getElementById('doc-pod').innerText = doc.port_of_discharge;
-                document.getElementById('doc-filename').innerText = doc.original_filename;
+                setText('display-si-weight', Number(doc.total_gross_weight_kg).toLocaleString() + ' KGS');
+                setText('doc-shipper-name', doc.shipper_name);
+                setText('doc-shipper-addr', doc.shipper_address || '');
+                setText('doc-shipper-iec', doc.shipper_iec || 'N/A');
+                setText('doc-shipper-gstin', doc.shipper_gstin || 'N/A');
+                setText('doc-consignee-name', doc.consignee_name);
+                setText('doc-consignee-addr', doc.consignee_address || '');
+                setText('doc-consignee-tax', doc.consignee_tax_id || 'N/A');
+                setText('doc-cargo-desc', doc.cargo_description || '');
+                setText('doc-packages', (doc.total_packages || 0) + ' ' + (doc.package_type || 'Cartons'));
+                setText('doc-vessel', doc.vessel_name + ' / ' + doc.voyage_number);
+                setText('doc-pol', doc.port_of_loading);
+                setText('doc-pod', doc.port_of_discharge);
+                setText('doc-filename', doc.original_filename);
                 
                 // Status badge
                 const statusEl = document.getElementById('shipment-status-pill');
-                if (doc.lifecycle_state === 'CARGOWISE_SYNCED') {{
-                    statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center gap-1.5';
-                    statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400"></span> CARGOWISE_SYNCED';
-                }} else if (flags.some(f => f.is_resolved === 0)) {{
-                    statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30 flex items-center gap-1.5';
-                    statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span> EXCEPTION_HOLD';
-                }} else {{
-                    statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5';
-                    statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> APPROVED_FOR_EDI';
+                if (statusEl) {{
+                    if (doc.lifecycle_state === 'CARGOWISE_SYNCED') {{
+                        statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center gap-1.5';
+                        statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400"></span> CARGOWISE_SYNCED';
+                    }} else if (flags.some(f => f.is_resolved === 0)) {{
+                        statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30 flex items-center gap-1.5';
+                        statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span> EXCEPTION_HOLD';
+                    }} else {{
+                        statusEl.className = 'px-2.5 py-1 rounded text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5';
+                        statusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> APPROVED_FOR_EDI';
+                    }}
                 }}
             }}
 
@@ -372,12 +379,12 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
         }}
 
         function renderInvoice(inv) {{
-            document.getElementById('inv-number').innerText = inv.invoice_number;
-            document.getElementById('inv-billto').innerText = inv.bill_to_party;
-            document.getElementById('inv-base').innerText = '₹' + Number(inv.total_inr_base).toLocaleString('en-IN', {{minimumFractionDigits: 2}});
-            document.getElementById('inv-cgst').innerText = '₹' + Number(inv.gst_amount_inr / 2.0).toLocaleString('en-IN', {{minimumFractionDigits: 2}});
-            document.getElementById('inv-sgst').innerText = '₹' + Number(inv.gst_amount_inr / 2.0).toLocaleString('en-IN', {{minimumFractionDigits: 2}});
-            document.getElementById('inv-grand').innerText = '₹' + Number(inv.grand_total_inr).toLocaleString('en-IN', {{minimumFractionDigits: 2}});
+            setText('inv-number', inv.invoice_number);
+            setText('inv-billto', inv.bill_to_party);
+            setText('inv-base', '₹' + Number(inv.total_inr_base || 0).toLocaleString('en-IN', {{minimumFractionDigits: 2}}));
+            setText('inv-cgst', '₹' + Number((inv.gst_amount_inr || 0) / 2.0).toLocaleString('en-IN', {{minimumFractionDigits: 2}}));
+            setText('inv-sgst', '₹' + Number((inv.gst_amount_inr || 0) / 2.0).toLocaleString('en-IN', {{minimumFractionDigits: 2}}));
+            setText('inv-grand', '₹' + Number(inv.grand_total_inr || 0).toLocaleString('en-IN', {{minimumFractionDigits: 2}}));
 
             const itemsTbody = document.getElementById('inv-items-tbody');
             let html = '';
@@ -521,25 +528,48 @@ def render_dahnay_portal_html(selected_source: str = "excel") -> str:
             const banner = document.getElementById('demo-guide-toast');
             if (banner) {{
                 banner.classList.remove('hidden');
-                banner.innerHTML = '<span class="font-bold text-blue-400">[1/3] SI Ingested</span>: 2 Checksum Errors & 2,800 KG SOLAS VGM Overweight detected.';
+                banner.innerHTML = '<span class="font-bold text-blue-400">[1/3] Step 1</span>: Ingesting raw Shipping Instruction. Checking ISO 6346 checksums & SOLAS weights...';
             }}
 
             await loadShipment('BKG-MAA-992104');
             window.scrollTo({{ top: 380, behavior: 'smooth' }});
 
-            await new Promise(r => setTimeout(r, 2200));
+            await new Promise(r => setTimeout(r, 2000));
 
-            if (banner) banner.innerHTML = '<span class="font-bold text-amber-400">[2/3] Auto-Fixing</span>: Applying 1-click checksum correction & slot waiver...';
-            await autoFixDiscrepancy(1);
-            await new Promise(r => setTimeout(r, 1400));
+            if (banner) banner.innerHTML = '<span class="font-bold text-amber-400">[2/3] Step 2</span>: Discrepancy Caught! Auto-fixing container check-digit typo & recording slot waiver...';
+
+            try {{
+                const res = await fetch('/api/v1/shipments/BKG-MAA-992104');
+                const json = await res.json();
+                if (json.status === 'success' && json.data.discrepancies) {{
+                    for (const f of json.data.discrepancies) {{
+                        if (f.is_resolved === 0) {{
+                            await fetch('/api/v1/discrepancies/' + f.id + '/resolve', {{
+                                method: 'POST',
+                                headers: {{ 'Content-Type': 'application/json' }},
+                                body: JSON.stringify({{ 
+                                    resolution_type: 'AUTO_FIX', 
+                                    notes: 'Auto-resolved via FreightFlow 60s Demo Suite' 
+                                }})
+                            }});
+                        }}
+                    }}
+                    await loadShipment('BKG-MAA-992104');
+                    await refreshShipmentsTable();
+                }}
+            }} catch (e) {{
+                console.error(e);
+            }}
+
+            await new Promise(r => setTimeout(r, 1500));
 
             window.scrollTo({{ top: document.body.scrollHeight, behavior: 'smooth' }});
-            if (banner) banner.innerHTML = '<span class="font-bold text-emerald-400">[3/3] Exporting CargoWise XML</span>: Validating UniversalShipment v1.1 payload...';
+            if (banner) banner.innerHTML = '<span class="font-bold text-emerald-400">[3/3] Step 3</span>: Exporting validated UniversalShipment XML for CargoWise One eAdaptor...';
             await new Promise(r => setTimeout(r, 1200));
             await transmitCargoWise();
 
             if (banner) {{
-                banner.innerHTML = '<span class="font-bold text-emerald-300">✔ 60s Demo Flow Complete</span>: Replaced 22 mins manual re-entry. Zero B/L penalties.';
+                banner.innerHTML = '<span class="font-bold text-emerald-300">✔ Demo Complete</span>: Manual entry eliminated. CargoWise XML ready to import.';
             }}
         }}
 
