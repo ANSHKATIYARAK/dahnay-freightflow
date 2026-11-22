@@ -21,6 +21,18 @@ if sys.platform == "win32":
 DB_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 DB_PATH = os.path.join(DB_DIR, "freightflow.db")
 
+# Vercel / Serverless Environment Compatibility (Writable /tmp)
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    DB_DIR = "/tmp"
+    DB_PATH = "/tmp/freightflow.db"
+    src_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "freightflow.db"))
+    if os.path.exists(src_db) and not os.path.exists(DB_PATH):
+        try:
+            import shutil
+            shutil.copy2(src_db, DB_PATH)
+        except Exception:
+            pass
+
 
 def get_db_connection() -> sqlite3.Connection:
     os.makedirs(DB_DIR, exist_ok=True)
