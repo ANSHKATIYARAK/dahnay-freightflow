@@ -1,0 +1,14 @@
+# Vercel Deployment Ignore File
+dahnay_logistics/repos/
+.agents/
+.claude/
+venture_os/
+saas_platform/
+studio_engine/
+freight_flow/
+tools/
+tests/
+scratch/
+build/
+*.db
+!dahnay_logistics/data/freightflow.db

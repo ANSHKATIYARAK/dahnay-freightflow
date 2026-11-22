@@ -9,7 +9,10 @@ import re
 import json
 from typing import Tuple, List
 from openpyxl import load_workbook
-import pdfplumber
+try:
+    import pdfplumber
+except ImportError:
+    pdfplumber = None
 
 from dahnay_logistics.engine.models import ShippingInstruction, ContainerDetail, FreightTerms
 from dahnay_logistics.engine.checksum import ContainerValidator, PortLocationValidator
@@ -85,15 +88,26 @@ class MultiFormatSINormalizer:
 
     @classmethod
     def parse_pdf(cls, file_path: str) -> Tuple[ShippingInstruction, float]:
-        text_pages = []
-        with pdfplumber.open(file_path) as pdf:
-            for page in pdf.pages:
-                text = page.extract_text()
-                if text:
-                    text_pages.append(text)
-
-        full_text = "\n".join(text_pages)
-        return cls.parse_text(full_text, filename=os.path.basename(file_path))
+        if pdfplumber is not None:
+            try:
+                text_pages = []
+                with pdfplumber.open(file_path) as pdf:
+                    for page in pdf.pages:
+                        text = page.extract_text()
+                        if text:
+                            text_pages.append(text)
+                full_text = "\n".join(text_pages)
+                return cls.parse_text(full_text, filename=os.path.basename(file_path))
+            except Exception:
+                pass
+        
+        # Fallback if pdfplumber is unavailable or parsing encountered an error
+        try:
+            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+                return cls.parse_text(content, filename=os.path.basename(file_path))
+        except Exception:
+            return cls.parse_text("", filename=os.path.basename(file_path))
 
     @classmethod
     def parse_json(cls, file_path: str) -> Tuple[ShippingInstruction, float]:

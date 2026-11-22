@@ -22,10 +22,28 @@ from dahnay_logistics.engine.normalizer import MultiFormatSINormalizer
 from dahnay_logistics.engine.reconciliation import DahNAYReconciliationEngine
 from dahnay_logistics.engine.invoice_generator import CommercialInvoiceGenerator
 
+import tempfile
+
 router = APIRouter(prefix="/api/v1", tags=["DahNAY FreightFlow Operations"])
 
-UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "datasets", "uploads"))
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+def _get_upload_dir() -> str:
+    """Returns a writable directory for temporary uploads across serverless and local runtimes."""
+    serverless_envs = ["VERCEL", "VERCEL_ENV", "AWS_LAMBDA_FUNCTION_NAME", "LAMBDA_TASK_ROOT", "AWS_EXECUTION_ENV"]
+    if any(os.environ.get(k) for k in serverless_envs):
+        tmp_dir = os.path.join(tempfile.gettempdir(), "freightflow_uploads")
+        os.makedirs(tmp_dir, exist_ok=True)
+        return tmp_dir
+
+    local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "datasets", "uploads"))
+    try:
+        os.makedirs(local_dir, exist_ok=True)
+        return local_dir
+    except (OSError, PermissionError):
+        tmp_dir = os.path.join(tempfile.gettempdir(), "freightflow_uploads")
+        os.makedirs(tmp_dir, exist_ok=True)
+        return tmp_dir
+
+UPLOAD_DIR = _get_upload_dir()
 
 
 class DiscrepancyResolveRequest(BaseModel):

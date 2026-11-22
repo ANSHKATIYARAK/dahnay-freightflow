@@ -18,25 +18,55 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-DB_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
-DB_PATH = os.path.join(DB_DIR, "freightflow.db")
+import tempfile
+import shutil
 
-# Vercel / Serverless Environment Compatibility (Writable /tmp)
-if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
-    DB_DIR = "/tmp"
-    DB_PATH = "/tmp/freightflow.db"
-    src_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "freightflow.db"))
-    if os.path.exists(src_db) and not os.path.exists(DB_PATH):
-        try:
-            import shutil
-            shutil.copy2(src_db, DB_PATH)
-        except Exception:
-            pass
+def _get_db_path() -> str:
+    """Returns a writable SQLite database path, copying seeded DB to /tmp if in serverless."""
+    serverless_envs = ["VERCEL", "VERCEL_ENV", "AWS_LAMBDA_FUNCTION_NAME", "LAMBDA_TASK_ROOT", "AWS_EXECUTION_ENV"]
+    is_serverless = any(os.environ.get(k) for k in serverless_envs)
+    
+    if is_serverless:
+        tmp_db = os.path.join(tempfile.gettempdir(), "freightflow.db")
+        if not os.path.exists(tmp_db):
+            src_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "freightflow.db"))
+            if os.path.exists(src_db):
+                try:
+                    shutil.copy2(src_db, tmp_db)
+                except Exception:
+                    pass
+        return tmp_db
 
+    # Local development environment
+    local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+    try:
+        os.makedirs(local_dir, exist_ok=True)
+        test_file = os.path.join(local_dir, ".perm_test")
+        with open(test_file, "w") as f:
+            f.write("ok")
+        os.remove(test_file)
+        return os.path.join(local_dir, "freightflow.db")
+    except (OSError, PermissionError):
+        tmp_db = os.path.join(tempfile.gettempdir(), "freightflow.db")
+        src_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "freightflow.db"))
+        if not os.path.exists(tmp_db) and os.path.exists(src_db):
+            try:
+                shutil.copy2(src_db, tmp_db)
+            except Exception:
+                pass
+        return tmp_db
+
+DB_PATH = _get_db_path()
 
 def get_db_connection() -> sqlite3.Connection:
-    os.makedirs(DB_DIR, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    db_path = _get_db_path()
+    parent = os.path.dirname(db_path)
+    if parent:
+        try:
+            os.makedirs(parent, exist_ok=True)
+        except Exception:
+            pass
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
